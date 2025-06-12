@@ -76,11 +76,9 @@ app.post('/upload', upload.single('file'), async (req: Request, res: Response) =
 		})
 
 		// reterive file
-		const retrivedFile = await client.files.retrieve({
+		/* const retrivedFile = await client.files.retrieve({
 			fileId: uploadedPdforDocx.id
-		})
-
-		console.log("file file: ", retrivedFile)
+		}) */
 
 		const signedUrl = await client.files.getSignedUrl({
 			fileId: uploadedPdforDocx.id
@@ -94,8 +92,12 @@ app.post('/upload', upload.single('file'), async (req: Request, res: Response) =
 			includeImageBase64: true
 		})
 
+		const mergedResponse = osrResponse.pages.map(m => m.markdown).join('\n\n')
+
+		// instade convert this to HTML here  itself and response to client.
+
 		res.status(200).json({
-			data: osrResponse
+			data: mergedResponse
 		})
 
 	} catch (error) {
