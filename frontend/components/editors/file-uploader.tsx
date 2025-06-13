@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import type React from "react"
 
@@ -7,8 +7,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Upload, FileText, Loader2, CheckCircle, AlertCircle } from "lucide-react"
 import { convertMarkdownToTiptopJSON } from '@/lib/markdown-converter'
-import { RichTextEditor } from '@/components/rich-text-editor'
+import { RichTextEditor } from '@/components/editors/rich-text-editor'
 import { cn } from "@/lib/utils"
+
+import { SAMPLE_MARKDOWN } from '@/constants/content'
 
 type UploadStatus = "idle" | "uploading" | "success" | "error"
 
@@ -16,7 +18,6 @@ export const FileUploader = () => {
 	const [uploadStatus, setUploadStatus] = useState<UploadStatus>("idle")
 	const [fileName, setFileName] = useState<string>("")
 	const [data, setData] = useState([])
-	console.log("data: ", data)
 	const [errorMessage, setErrorMessage] = useState<string>("")
 	const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -45,7 +46,8 @@ export const FileUploader = () => {
 
 			const { data } = await response.json()
 
-			const editorContent = await convertMarkdownToTiptopJSON(data)
+			// const editorContent = await convertMarkdownToTiptopJSON(data)
+			const editorContent = await convertMarkdownToTiptopJSON(SAMPLE_MARKDOWN)
 
 			setData(editorContent)
 			setUploadStatus("success")
@@ -160,8 +162,7 @@ export const FileUploader = () => {
 				</div>
 			) : (
 				<RichTextEditor content={data} />
-			)
-			}
+			)}
 		</>
 	)
 }
