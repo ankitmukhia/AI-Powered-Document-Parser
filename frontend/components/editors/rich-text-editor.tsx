@@ -1,6 +1,6 @@
 'use client'
 
-import { useEditor, EditorContent, type Editor } from '@tiptap/react'
+import { useEditor, EditorContent, type Editor, type Content } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Underline from '@tiptap/extension-underline'
 import TextAligin from '@tiptap/extension-text-align'
@@ -158,8 +158,7 @@ const MenuBar = ({ editor }: {
 	)
 }
 
-
-export const RichTextEditor = ({ content }: { content: any }) => {
+export const RichTextEditor = ({ content }: { content: Content }) => {
 	const editor = useEditor({
 		extensions: [
 			StarterKit,
@@ -171,10 +170,10 @@ export const RichTextEditor = ({ content }: { content: any }) => {
 		],
 		// tries to render immediately, even during SSR, so false.
 		immediatelyRender: false,
-		content: content,
+		content,
 		editorProps: {
 			attributes: {
-				class: 'prose prose-sm focus:outline-none max-w-none',
+				class: 'prose dark:prose-invert prose-sm focus:outline-none max-w-none',
 			}
 		}
 	})

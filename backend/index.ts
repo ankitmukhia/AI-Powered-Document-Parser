@@ -1,6 +1,8 @@
 import express, { type Express, type Request, type Response } from 'express'
 import { Mistral } from '@mistralai/mistralai'
 import multer from 'multer'
+import { remark } from 'remark'
+import remarkHtml from 'remark-html'
 import cors from 'cors'
 import fs from 'fs'
 import z from 'zod'
@@ -92,12 +94,14 @@ app.post('/upload', upload.single('file'), async (req: Request, res: Response) =
 			includeImageBase64: true
 		})
 
-		const mergedResponse = osrResponse.pages.map(m => m.markdown).join('\n\n')
+		const mergedResponse = osrResponse.pages.map(m => m.markdown).join()
 
-		// instade convert this to HTML here  itself and response to client.
+		const processedContent = await remark().use(remarkHtml, { sanitize: false }).process(mergedResponse)
+
+		const htmlContent = processedContent.toString()
 
 		res.status(200).json({
-			data: mergedResponse
+			data: htmlContent
 		})
 
 	} catch (error) {
