@@ -33,6 +33,7 @@ export const FileUploader = ({
 	const [fileName, setFileName] = useState<string>("")
 
 	const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+		console.log("rendering handleFileSelect")
 		const file = event.target.files?.[0]
 		if (!file) return
 
