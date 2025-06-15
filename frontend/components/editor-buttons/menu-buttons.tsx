@@ -1,6 +1,15 @@
 import { type Editor } from '@tiptap/react'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
+import { DownloadIcon, FileOutput } from 'lucide-react'
+import { exportFile } from '@/components/editors/export-file'
+
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 import {
 	HeadingOneIcon,
@@ -21,6 +30,9 @@ import {
 } from '../editor-icons'
 
 export const MenuButtons = ({ editor, className }: { editor: Editor, className: string }) => {
+	const tasks = exportFile(editor)
+	const taskTypes = Object.keys(tasks)
+
 	return (
 		<div className={className}>
 			<Button
@@ -143,6 +155,27 @@ export const MenuButtons = ({ editor, className }: { editor: Editor, className: 
 			>
 				<AlignRightIcon />
 			</Button>
+
+			<DropdownMenu>
+				<DropdownMenuTrigger asChild>
+					<Button
+						className="rounded-xl"
+						variant="ghost"
+					>
+						<DownloadIcon />
+					</Button>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent className="rounded-2xl font-semibold border-white/5">
+					{taskTypes.map((task) => {
+						return (
+							<DropdownMenuItem key={task} onClick={tasks[task]} className="rounded-xl">
+								<FileOutput />
+								{task}
+							</DropdownMenuItem>
+						)
+					})}
+				</DropdownMenuContent>
+			</DropdownMenu>
 		</div>
 	)
 }

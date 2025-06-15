@@ -5,7 +5,7 @@ import { useIntersection } from 'react-use'
 
 const margin = 90
 
-export function RootMarginVisualizer() {
+export function IntersectionVisualizer() {
 	const ref = useRef(null)
 	const [viewportHeight, setViewportHeight] = useState(0)
 

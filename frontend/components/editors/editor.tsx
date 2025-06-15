@@ -5,6 +5,7 @@ import { UploadStatus } from './file-uploader'
 import { FileUploader } from './file-uploader'
 import { RichTextEditor } from './rich-text-editor'
 import { generateJSON } from '@tiptap/html'
+import { SAMPLE_MARKDOWN } from '@/constants/content'
 
 import { type Content } from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
@@ -50,8 +51,8 @@ export const Editor = () => {
 	}
 
 	return (
-		<div className="w-full max-w-3xl mx-auto p-6">
-			{editorData === null ? (
+		<div className="max-w-3xl mx-auto p-6">
+			{!editorData === null ? (
 				<FileUploader
 					onFileSelect={handleFileSelect}
 					uploadStatus={uploadStatus}
@@ -59,7 +60,7 @@ export const Editor = () => {
 					errorMessage={errorMessage}
 				/>
 			) : (
-				<RichTextEditor content={editorData} />
+				<RichTextEditor content={SAMPLE_MARKDOWN} />
 			)}
 		</div>
 	)

@@ -1,38 +1,39 @@
-export const SAMPLE_MARKDOWN = `# The Almanack of Naval Ravikant
+export const SAMPLE_MARKDOWN = `
+<h1>Welcome to Tiptap</h1>
 
-## A Guide to Wealth and Happiness
+<h2>Hello Tiptap 👋</h2>
 
-**Copyright (C) 2020 Eric Jorgenson** - All rights reserved.
+<p>
+  This is a <strong>basic</strong>, <em>but powerful</em>, <u>inline-formatted</u> text
+  editor built with <code>&lt;Tiptap&gt;</code>.
+</p>
 
-### Table of Contents
+<p>
+  You can <strong>bold</strong>, <em>italicize</em>, <u>underline</u>, and even add
+  <code>inline code</code> as needed.
+</p>
 
-This book has been created as a public service. It is available for free download in pdf and e-reader versions on Navalmanack.com. 
+<h3>Lists</h3>
+<ul>
+  <li>Bullet item one</li>
+  <li>Bullet item two</li>
+</ul>
 
-> Naval is not earning any money on this book. Naval has essays, podcasts and more at Nav.al and is on Twitter @Naval.
+<ol>
+  <li>Numbered item one</li>
+  <li>Numbered item two</li>
+</ol>
 
-#### Important Sections:
+<h3>Blockquote</h3>
+<blockquote>
+  “Simplicity is the ultimate sophistication.” — Leonardo da Vinci
+</blockquote>
 
-- **BUILDING WEALTH** - Understanding How Wealth Is Created
-- **FINDING LEVERAGE** - Get Paid for Your Judgment  
-- **BUILDING JUDGMENT** - Learn the Skills of Decision-Making
-- **LEARNING HAPPINESS** - Happiness Is Learned
+<h3>Code Block</h3>
+<pre><code>function greet() {
+  console.log("Hello, world!");
+}</code></pre>
 
-### Key Principles
-
-1. **Seek wealth, not money or status** - Wealth is having assets that earn while you sleep
-2. **You will get rich by giving society what it wants** - But does not yet know how to get at scale
-3. **Pick an industry where you can play long-term games** - With long-term people
-
-Here's some \`inline code\` and a code block:
-
-\`\`\`javascript
-const wealth = () => {
-  return "specific knowledge" + "leverage" + "accountability";
-};
-\`\`\`
-
-**Links and Resources:**
-- [Naval's Twitter](https://twitter.com/naval)
-- [Navalmanack.com](https://navalmanack.com)
-
-*This content demonstrates various markdown formatting that will be converted to rich text.*`
+<h3>Undo/Redo Support</h3>
+<p>Try making some edits and hit Undo/Redo to see it in action.</p>
+`

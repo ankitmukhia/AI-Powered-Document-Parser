@@ -7,7 +7,6 @@ import Underline from '@tiptap/extension-underline'
 import TextAligin from '@tiptap/extension-text-align'
 import Strike from '@tiptap/extension-strike'
 import { MenuButtons } from '@/components/editor-buttons/menu-buttons'
-import { ExportFile } from './export-file'
 
 const HeaderMenu = ({ editor }: {
 	editor: Editor | null
@@ -15,7 +14,7 @@ const HeaderMenu = ({ editor }: {
 	if (!editor) {
 		return null
 	}
-	return <MenuButtons editor={editor} className="flex border-b pb-2 gap-2" />
+	return <MenuButtons editor={editor} className="flex items-center overflow-x-auto justify-center gap-1 border-b pb-2" />
 }
 
 const NavMenu = ({ editor }: {
@@ -24,7 +23,7 @@ const NavMenu = ({ editor }: {
 	if (!editor) {
 		return null
 	}
-	return <MenuButtons editor={editor} className="flex border rounded-lg py-1 px-2 gap-2 bg-zinc-900" />
+	return <MenuButtons editor={editor} className="flex gap-1 items-center justify-center bg-zinc-900/90 rounded-xl py-2" />
 }
 
 export const RichTextEditor = ({ content }: { content: Content }) => {
@@ -48,7 +47,7 @@ export const RichTextEditor = ({ content }: { content: Content }) => {
 	})
 
 	return (
-		<div className="flex flex-col space-y-6 items-center justify-center">
+		<div className="flex flex-col space-y-6">
 			<IntersectionSwap nav={
 				<NavMenu editor={editor} />
 			}>

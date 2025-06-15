@@ -15,15 +15,13 @@ export const IntersectionSwap = ({
 
 	const intersection = useIntersection(intersectionRef, {
 		root: null,
-		rootMargin: "-50px"
+		rootMargin: "-55px"
 	})
 
 	let showPrimary = false;
 	if (intersection && !intersection.isIntersecting) {
 		showPrimary = true
 	}
-
-	console.log("intersection log: ", intersection)
 
 	return (
 		<>
