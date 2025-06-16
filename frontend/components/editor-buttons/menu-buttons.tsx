@@ -3,7 +3,7 @@ import { type Editor } from '@tiptap/react'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { DownloadIcon, FileOutput } from 'lucide-react'
-import { exportFile } from '@/components/editors/export-file'
+import { exportFile, ReturnKeyType } from '@/components/editors/export-file'
 
 import {
 	DropdownMenu,
@@ -31,16 +31,8 @@ import {
 } from '../editor-icons'
 
 export const MenuButtons = ({ editor, className }: { editor: Editor, className: string }) => {
-	const tasks =  exportFile(editor)
-	const taskTypes = Object.keys(tasks)
-
-	React.useEffect(() => {
-		console.log('Export functions recreated:', {
-			pdf: tasks.pdf,
-			docx: tasks.docx,
-			md: tasks.md
-		})
-	}, [tasks.pdf, tasks.docx, tasks.md])
+	const tasks = exportFile(editor)
+	const taskTypes = Object.keys(tasks) as ReturnKeyType[]
 
 	return (
 		<div className={className}>

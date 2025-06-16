@@ -1,10 +1,9 @@
-import { useCallback } from 'react'
 import { type Editor } from '@tiptap/react'
 
 export const exportFile = (editor: Editor) => {
 	const content = editor.getHTML()
 
-	const exportPdf = useCallback(() => {
+	const exportPdf = async () => {
 		try {
 			const printWindow = window.open("", "_blank")
 			if (printWindow) {
@@ -27,11 +26,12 @@ export const exportFile = (editor: Editor) => {
 				`)
 				printWindow.document.close()
 				printWindow.print()
+				printWindow.close()
 			}
 		} catch (err) {
 			console.log(err instanceof Error ? err.message : "Error exporting PDF")
 		}
-	}, [content])
+	}
 
 	const exportDocx = async () => {
 		try {
@@ -117,7 +117,7 @@ export const exportFile = (editor: Editor) => {
 		}
 	}
 
-	const exportMarkdown = () => {
+	const exportMarkdown = async () => {
 		try {
 			const markdown = content
 				.replace(/<h1[^>]*>(.*?)<\/h1>/g, "# $1\n\n")
@@ -143,7 +143,7 @@ export const exportFile = (editor: Editor) => {
 			const url = URL.createObjectURL(blob)
 			const a = document.createElement("a")
 			a.href = url
-			a.download = "cocument.md"
+			a.download = "document.md"
 			a.click()
 			URL.revokeObjectURL(url)
 		} catch (err) {
@@ -153,3 +153,5 @@ export const exportFile = (editor: Editor) => {
 
 	return { pdf: exportPdf, docx: exportDocx, md: exportMarkdown }
 }
+
+export type ReturnKeyType = keyof ReturnType<typeof exportFile>

@@ -5,7 +5,7 @@ import { UploadStatus } from './file-uploader'
 import { FileUploader } from './file-uploader'
 import { RichTextEditor } from './rich-text-editor'
 import { generateJSON } from '@tiptap/html'
-import { SAMPLE_MARKDOWN } from '@/constants/content'
+// import { SAMPLE_MARKDOWN } from '@/constants/content'
 
 import { type Content } from '@tiptap/react'
 import { StarterKit } from '@tiptap/starter-kit'
