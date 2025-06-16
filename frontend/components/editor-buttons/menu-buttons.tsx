@@ -1,3 +1,4 @@
+import React from 'react'
 import { type Editor } from '@tiptap/react'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
@@ -30,8 +31,16 @@ import {
 } from '../editor-icons'
 
 export const MenuButtons = ({ editor, className }: { editor: Editor, className: string }) => {
-	const tasks = exportFile(editor)
+	const tasks =  exportFile(editor)
 	const taskTypes = Object.keys(tasks)
+
+	React.useEffect(() => {
+		console.log('Export functions recreated:', {
+			pdf: tasks.pdf,
+			docx: tasks.docx,
+			md: tasks.md
+		})
+	}, [tasks.pdf, tasks.docx, tasks.md])
 
 	return (
 		<div className={className}>

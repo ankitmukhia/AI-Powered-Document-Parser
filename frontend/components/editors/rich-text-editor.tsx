@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { useEditor, EditorContent, type Editor, type Content } from '@tiptap/react'
 import { IntersectionSwap } from '@/components/intersection-swap'
 import StarterKit from '@tiptap/starter-kit'
@@ -26,7 +27,7 @@ const NavMenu = ({ editor }: {
 	return <MenuButtons editor={editor} className="flex gap-1 items-center justify-center bg-zinc-900/90 rounded-xl py-2" />
 }
 
-export const RichTextEditor = ({ content }: { content: Content }) => {
+export const RichTextEditor = React.memo(({ content }: { content: Content }) => {
 	const editor = useEditor({
 		extensions: [
 			StarterKit,
@@ -57,4 +58,4 @@ export const RichTextEditor = ({ content }: { content: Content }) => {
 			<EditorContent editor={editor} />
 		</div>
 	)
-}
+})

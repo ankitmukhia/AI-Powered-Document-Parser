@@ -1,10 +1,10 @@
+import { useCallback } from 'react'
 import { type Editor } from '@tiptap/react'
-import { Document, Paragraph, Packer, TextRun, HeadingLevel, } from 'docx'
 
 export const exportFile = (editor: Editor) => {
 	const content = editor.getHTML()
 
-	const exportPdf = () => {
+	const exportPdf = useCallback(() => {
 		try {
 			const printWindow = window.open("", "_blank")
 			if (printWindow) {
@@ -31,10 +31,12 @@ export const exportFile = (editor: Editor) => {
 		} catch (err) {
 			console.log(err instanceof Error ? err.message : "Error exporting PDF")
 		}
-	}
+	}, [content])
 
 	const exportDocx = async () => {
 		try {
+			const { Document, Paragraph, Packer, TextRun, HeadingLevel, } = await import('docx')
+
 			const tempDiv = document.createElement("div");
 			tempDiv.innerHTML = content;
 

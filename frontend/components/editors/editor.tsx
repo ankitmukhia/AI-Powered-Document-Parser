@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { UploadStatus } from './file-uploader'
 import { FileUploader } from './file-uploader'
 import { RichTextEditor } from './rich-text-editor'
@@ -20,7 +20,7 @@ export const Editor = () => {
 	const [fileName, setFileName] = useState<string>("")
 	const [errorMessage, setErrorMessage] = useState<string>("")
 
-	const handleFileSelect = async (file: File) => {
+	const handleFileSelect = useCallback(async (file: File) => {
 		setFileName(file.name)
 		setUploadStatus("uploading")
 		setErrorMessage("")
@@ -48,11 +48,15 @@ export const Editor = () => {
 			setUploadStatus("error")
 			setErrorMessage(error instanceof Error ? error.message : "Upload failed")
 		}
-	}
+	}, [fileName, uploadStatus, errorMessage, editorData])
+
+	useEffect(() => {
+		console.log("parent handlefileselect rerendered")
+	}, [handleFileSelect])
 
 	return (
 		<div className="max-w-3xl mx-auto p-6">
-			{!editorData === null ? (
+			{editorData === null ? (
 				<FileUploader
 					onFileSelect={handleFileSelect}
 					uploadStatus={uploadStatus}
@@ -60,7 +64,7 @@ export const Editor = () => {
 					errorMessage={errorMessage}
 				/>
 			) : (
-				<RichTextEditor content={SAMPLE_MARKDOWN} />
+				<RichTextEditor content={editorData} />
 			)}
 		</div>
 	)
