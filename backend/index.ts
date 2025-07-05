@@ -1,21 +1,31 @@
 import express, { type Express, type Request, type Response } from 'express'
 import { Mistral } from '@mistralai/mistralai'
 import multer from 'multer'
+import path from 'path'
 import { remark } from 'remark'
 import remarkHtml from 'remark-html'
 import cors from 'cors'
-import fs from 'fs'
 import z from 'zod'
-
+import { v2 as cloudinary } from 'cloudinary';
 const app: Express = express()
+
 app.use(cors({
-	origin: "http://localhost:3000"
+	origin: process.env.NODE_ENV === "production"
+		? process.env.PRODUCTION
+		: "http://localhost:3000"
 }))
 
-const PORT = process.env.PORT ?? 3000;
+const PORT = process.env.PORT ?? 3001;
 const apiKey = process.env.MISTRAL_API_KEY ?? "mistral_api_key";
 const client = new Mistral({ apiKey: apiKey })
 
+cloudinary.config({
+	cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+	api_key: process.env.CLOUDINARY_API_KEY,
+	api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
+// can also quick and fast Buffer store.
 const storage = multer.diskStorage({
 	destination: "./uploads",
 	filename: (_, file: Express.Multer.File, cb: (error: Error | null, filePath: string) => void) => {
@@ -65,31 +75,17 @@ app.post('/upload', upload.single('file'), async (req: Request, res: Response) =
 	}
 
 	try {
-		// read file now from the disk and fead it into mistral ai and send back response
-		const uploadedFile = fs.readFileSync(data.path)
+		//TODO: Not working with pdf currently. Error perset.
+		const cloudinaryUpload = await cloudinary.uploader.upload(data.path, {
+			resource_type: "raw",
+			public_id: path.parse(data.originalname).name
+		});
 
-		// either upload within mistral or cloude or cloudinary etc.
-		const uploadedPdforDocx = await client.files.upload({
-			file: {
-				fileName: data.filename,
-				content: uploadedFile
-			},
-			purpose: "ocr"
-		})
-
-		// reterive file
-		/* const retrivedFile = await client.files.retrieve({
-			fileId: uploadedPdforDocx.id
-		}) */
-
-		const signedUrl = await client.files.getSignedUrl({
-			fileId: uploadedPdforDocx.id
-		})
 		const osrResponse = await client.ocr.process({
 			model: "mistral-ocr-latest",
 			document: {
 				type: "document_url",
-				documentUrl: signedUrl.url
+				documentUrl: cloudinaryUpload.secure_url
 			},
 			includeImageBase64: true
 		})
@@ -105,10 +101,12 @@ app.post('/upload', upload.single('file'), async (req: Request, res: Response) =
 		})
 
 	} catch (error) {
+		console.error(error);
 		if (error instanceof Error) {
-			console.log(error.message)
+			res.status(500).json({ message: 'Internal Server Error', error: error.message });
+		} else {
+			res.status(500).json({ message: 'An unknown error occurred' });
 		}
-		console.log(error)
 	}
 })
 
