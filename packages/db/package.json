@@ -1,0 +1,27 @@
+{
+  "name": "@repo/db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./scr/index.ts",
+  "scripts": {
+		"db:generate": "pnpm drizzle-kit generate",
+		"db:migrate": "pnpm drizzle-kit migrate",
+		"db:push": "pnpm drizzle-kit push"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.0.1",
+    "drizzle-orm": "^0.44.2",
+    "pg": "^8.16.3",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.15.4",
+    "drizzle-kit": "^0.31.4"
+  },
+	"exports": {
+		".": "./src/index.ts"
+	}
+}
